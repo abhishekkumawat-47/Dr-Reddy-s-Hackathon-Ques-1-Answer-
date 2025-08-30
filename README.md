@@ -5,10 +5,10 @@
 We conducted a **systematic, data-driven analysis** to determine the optimal reaction pathway among three alternatives (R1, R2, R3) for flow### **Strategic Impact:**
 - **Risk Reduction**: Data-driven selection minimizes process failures
 - **Cost Optimization**: Focus on impurity minimization and yield maximization reduces overall costs
-- **Quality Assurance**: Emphasis on impurity control ensures product specifications
-- **Economic Efficiency**: High yield and conversion maximize resource utilization
-- **Scalability**: Robust reaction enables confident scale-up
-- **Time-to-Market**: Clear recommendation accelerates development
+- **Quality Assurance**: Emphasis on impurity control ensures product specifications meet requirements
+- **Economic Efficiency**: High yield (96.4%) and low impurities (3.4%) maximize resource utilization
+- **Scalability**: Robust reaction enables confident scale-up to flow chemistry applications
+- **Time-to-Market**: Clear recommendation accelerates development and implementation
 
 ### **Technical Excellence:**
 - **Comprehensive Analysis**: 15 conditions × 8 metrics = 120 data points per reaction
@@ -17,7 +17,7 @@ We conducted a **systematic, data-driven analysis** to determine the optimal rea
 - **Validated Methodology**: Multiple analysis approaches confirm results
 - **Reproducible Framework**: Standardized approach for future decisions
 
-**🏆 UPDATED CONCLUSION: R1 is the optimal choice with even stronger justification under the new priority system, demonstrating superior performance in impurity minimization (3.4%), yield maximization (96.4%), and overall process efficiency.**pplications. This involved multiple analytical approaches, validation steps, and a priority-weighted scoring system.
+**🏆 UPDATED CONCLUSION: R1 is the optimal choice with even stronger justification under the new priority system, demonstrating superior performance in impurity minimization (3.4%), yield maximization (96.4%), and overall process efficiency for flow chemistry applications.**pplications. This involved multiple analytical approaches, validation steps, and a priority-weighted scoring system.
 
 ---
 
