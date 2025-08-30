@@ -2,7 +2,22 @@
 
 ## **📋 PROJECT OVERVIEW**
 
-We conducted a **systematic, data-driven analysis** to determine the optimal reaction pathway among three alternatives (R1, R2, R3) for flow chemistry applications. This involved multiple analytical approaches, validation steps, and a priority-weighted scoring system.
+We conducted a **systematic, data-driven analysis** to determine the optimal reaction pathway among three alternatives (R1, R2, R3) for flow### **Strategic Impact:**
+- **Risk Reduction**: Data-driven selection minimizes process failures
+- **Cost Optimization**: Focus on impurity minimization and yield maximization reduces overall costs
+- **Quality Assurance**: Emphasis on impurity control ensures product specifications
+- **Economic Efficiency**: High yield and conversion maximize resource utilization
+- **Scalability**: Robust reaction enables confident scale-up
+- **Time-to-Market**: Clear recommendation accelerates development
+
+### **Technical Excellence:**
+- **Comprehensive Analysis**: 15 conditions × 8 metrics = 120 data points per reaction
+- **Updated Priority System**: Aligned with question requirements for impurity minimization
+- **Enhanced Results**: R1 shows even stronger dominance (score: 4.160 vs previous 3.637)
+- **Validated Methodology**: Multiple analysis approaches confirm results
+- **Reproducible Framework**: Standardized approach for future decisions
+
+**🏆 UPDATED CONCLUSION: R1 is the optimal choice with even stronger justification under the new priority system, demonstrating superior performance in impurity minimization (3.4%), yield maximization (96.4%), and overall process efficiency.**pplications. This involved multiple analytical approaches, validation steps, and a priority-weighted scoring system.
 
 ---
 
@@ -50,42 +65,51 @@ We conducted a **systematic, data-driven analysis** to determine the optimal rea
 
 ## **🎯 PHASE 3: PRIORITY-WEIGHTED RANKING SYSTEM**
 
-### **Your Defined Priority Hierarchy:**
+### **Updated Priority Hierarchy (According to Question Requirements):**
 ```
-1. Selectivity (Weight: 1.0) - MOST IMPORTANT
-2. Temperature Sensitivity (Weight: 0.85)  
-3. Concentration Sensitivity (Weight: 0.85)
-4. Rate Constant (Weight: 0.7)
-5. Impurity Formation (Weight: 0.55)  
-6. Conversion (Weight: 0.4)
-7. Yield (Weight: 0.25)
-8. Others (Weight: 0.1)
+1. Impurity Formation (Weight: 1.0) - MOST IMPORTANT (minimization)
+2. Product Yield (Weight: 0.9) - Maximize yield = more product, less waste
+3. Conversion (Weight: 0.85) - Maximize substrate utilization
+4. Selectivity (Weight: 0.7) - Still important for quality and downstream costs
+5. Rate Constant (Weight: 0.55) - Throughput, but secondary to purity/yield
+6. Temperature Sensitivity (Weight: 0.4) - Stability
+7. Concentration Sensitivity (Weight: 0.4) - Robustness
+8. Others (Weight: 0.2)
 ```
 
-### **Why This Priority Order?**
+### **Why This Updated Priority Order?**
 
-#### **1. Selectivity (#1 Priority):**
-- **Business Rationale**: Directly impacts product purity and downstream processing costs
-- **Flow Chemistry Relevance**: Critical for continuous production efficiency
-- **Economic Impact**: High selectivity = less waste, lower purification costs
+#### **1. Impurity Formation (#1 Priority - Weight: 1.0):**
+- **Business Rationale**: Directly mentioned in question as key minimization target
+- **Quality Impact**: Lower impurities = higher product purity, reduced purification costs
+- **Regulatory Compliance**: Critical for pharmaceutical applications
+- **Economic Impact**: Minimal impurities reduce downstream processing complexity
 
-#### **2. Temperature/Concentration Sensitivity (#2 Priority):**
-- **Operational Stability**: Low sensitivity = easier process control
-- **Scalability**: Robust reactions are easier to scale and maintain
-- **Risk Mitigation**: Reduces variability in production quality
+#### **2. Product Yield (#2 Priority - Weight: 0.9):**
+- **Economic Efficiency**: Higher yield = more product per unit input, less waste
+- **Resource Optimization**: Maximizes utilization of expensive starting materials
+- **Sustainability**: Reduces waste generation and environmental impact
+- **Profitability**: Directly impacts bottom line through improved material efficiency
 
-#### **3. Rate Constant (#3 Priority):**
-- **Throughput**: Faster reactions = higher productivity
-- **Equipment Efficiency**: Shorter residence times in flow reactors
-- **Capital Efficiency**: Smaller reactor volumes needed
+#### **3. Conversion (#3 Priority - Weight: 0.85):**
+- **Substrate Utilization**: Ensures maximum conversion of starting materials
+- **Process Efficiency**: High conversion reduces unconverted reactant handling
+- **Economic Impact**: Minimizes raw material losses
 
-#### **4. Impurity Formation (#4 Priority):**
-- **Product Quality**: Directly affects final product specifications
-- **Purification Costs**: Lower impurities = simpler downstream processing
+#### **4. Selectivity (#4 Priority - Weight: 0.7):**
+- **Product Quality**: Still important for maintaining desired product specifications
+- **Process Control**: Affects overall process efficiency and product consistency
+- **Downstream Impact**: Influences purification requirements
 
-#### **5-7. Conversion, Yield, Others:**
-- **Secondary Importance**: Can often be optimized through conditions
-- **Process Optimization**: These can be improved post-selection
+#### **5. Rate Constant (#5 Priority - Weight: 0.55):**
+- **Throughput**: Faster reactions enable higher productivity
+- **Equipment Utilization**: Affects reactor sizing and residence time requirements
+- **Secondary Importance**: Can be optimized after ensuring quality and yield
+
+#### **6-7. Temperature/Concentration Sensitivity (#6-7 Priority - Weight: 0.4 each):**
+- **Process Robustness**: Important for operational stability
+- **Scalability**: Affects ease of scale-up and process control
+- **Lower Priority**: Secondary to product quality and yield considerations
 
 ---
 
@@ -96,13 +120,13 @@ We conducted a **systematic, data-driven analysis** to determine the optimal rea
 ```python
 def calculate_weighted_score(metrics, weights):
     score = (
-        metrics['selectivity'] * weights['selectivity'] +
-        (1 - metrics['temp_sensitivity']) * weights['temp_sensitivity'] +
-        (1 - metrics['conc_sensitivity']) * weights['conc_sensitivity'] +
-        metrics['rate_constant'] * weights['rate_constant'] +
         (1 - metrics['impurity_formation']) * weights['impurity_formation'] +
+        metrics['yield'] * weights['yield'] +
         metrics['conversion'] * weights['conversion'] +
-        metrics['yield'] * weights['yield']
+        metrics['selectivity'] * weights['selectivity'] +
+        metrics['rate_constant'] * weights['rate_constant'] +
+        (1 - metrics['temp_sensitivity']) * weights['temp_sensitivity'] +
+        (1 - metrics['conc_sensitivity']) * weights['conc_sensitivity']
     )
     return normalized_score
 ```
@@ -119,10 +143,11 @@ def calculate_weighted_score(metrics, weights):
 
 ### **Key Assumptions Made:**
 
-#### **1. Priority Weights:**
+#### **1. Updated Priority Weights:**
 ```
-Assumption: Selectivity is 4x more important than yield
-Rationale: Product purity is critical for pharmaceutical applications
+Assumption: Impurity formation is most critical, followed by yield and conversion
+Rationale: Question specifically emphasizes minimization of impurities as primary goal,
+          followed by maximizing product output and substrate utilization
 ```
 
 #### **2. Sensitivity Scoring:**
@@ -149,25 +174,28 @@ Rationale: Simplifies decision-making while maintaining accuracy
 
 ### **🏆 WINNING REACTION: R1**
 
-#### **Quantitative Results:**
+#### **Updated Quantitative Results (New Priority System):**
 ```
-Overall Score: 3.637/4.0
+Overall Score: 4.160/4.4 (increased from 3.637)
 Wins: 15/15 conditions (100% dominance)
+Impurities: 3.4% (vs R2: 89.2%, R3: 24.9%) - PRIMARY ADVANTAGE
+Yield: 96.4% (vs R2: 10.6%, R3: 74.9%) - SECONDARY ADVANTAGE
+Conversion: 99.8% (excellent across all reactions)
 Selectivity: 96.6% (vs R2: 10.7%, R3: 75.1%)
 Rate: 20.0%/h (fastest)
-Impurities: 3.4% (lowest)
 Temperature Sensitivity: 0.005 (most stable)
 ```
 
-#### **Business Justification:**
-- **Risk Mitigation**: Consistently best across all conditions
-- **Quality Assurance**: Highest selectivity ensures product purity
-- **Operational Excellence**: Lowest sensitivity = easier control
-- **Productivity**: Fastest reaction rate = highest throughput
+#### **Business Justification Under New Priorities:**
+- **Quality Excellence**: Minimal impurity formation (3.4%) ensures product purity
+- **Economic Efficiency**: Maximum yield (96.4%) reduces waste and maximizes output
+- **Resource Optimization**: Near-complete conversion (99.8%) maximizes substrate utilization
+- **Process Robustness**: Low sensitivity enables reliable scale-up and operation
+- **Enhanced Advantage**: R1's superiority is even more pronounced under new priority system
 
-### **🔍 Runner-up Analysis:**
-- **R3**: Good selectivity (75.1%) but slow rate (2.9%/h)
-- **R2**: Fast rate (10.0%/h) but poor selectivity (10.7%)
+### **🔍 Updated Runner-up Analysis:**
+- **R3**: Moderate performance with 24.9% impurities, 74.9% yield, but very slow (2.9%/h)
+- **R2**: Severely penalized by high impurities (89.2%) and poor yield (10.6%) despite moderate rate
 
 ---
 
@@ -180,10 +208,11 @@ Temperature Sensitivity: 0.005 (most stable)
 - Comprehensive coverage of operating conditions
 - Statistical validation of results
 
-#### **2. Business-Aligned Priorities:**
-- Selectivity emphasis aligns with quality requirements
-- Sensitivity focus ensures robust manufacturing
-- Multi-metric approach prevents optimization myopia
+#### **2. Business-Aligned Priorities (Updated):**
+- **Impurity minimization** emphasis aligns with quality and regulatory requirements
+- **Yield maximization** focus ensures economic efficiency and resource optimization
+- **Conversion optimization** maximizes substrate utilization
+- **Multi-metric approach** prevents optimization myopia while prioritizing critical factors
 
 #### **3. Scalable Framework:**
 - Priority weights can be adjusted for different applications
