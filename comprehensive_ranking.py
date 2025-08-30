@@ -9,16 +9,16 @@ print("="*70)
 
 class ReactionRanker:
     def __init__(self):
-        # Priority weights based on your requirements
+        # Priority weights based on your NEW requirements
         self.priority_weights = {
-            'selectivity': 1.0,           # Priority 1 - Most important
-            'temp_sensitivity': 0.85,     # Priority 2
-            'conc_sensitivity': 0.85,     # Priority 2  
-            'rate_constant': 0.7,         # Priority 3
-            'impurity_formation': 0.55,   # Priority 4 (lower is better)
-            'conversion': 0.4,            # Priority 5
-            'yield': 0.25,               # Priority 6
-            'others': 0.1                # Priority 7
+            'impurity_formation': 1.0,    # Priority 1 - Most important (minimization)
+            'yield': 0.9,                # Priority 2 - Maximize yield = more product, less waste
+            'conversion': 0.85,          # Priority 3 - Maximize substrate utilization
+            'selectivity': 0.7,          # Priority 4 - Still important for quality and downstream costs
+            'rate_constant': 0.55,       # Priority 5 - Throughput, but secondary to purity/yield
+            'temp_sensitivity': 0.4,     # Priority 6 - Stability
+            'conc_sensitivity': 0.4,     # Priority 6 - Robustness
+            'others': 0.2                # Priority 7
         }
         
         self.data = {}
@@ -194,13 +194,13 @@ class ReactionRanker:
         scores = []
         for i, rxn in enumerate(reactions):
             score = (
-                norm_selectivity[i] * self.priority_weights['selectivity'] +
-                norm_temp_sens[i] * self.priority_weights['temp_sensitivity'] +
-                norm_conc_sens[i] * self.priority_weights['conc_sensitivity'] +
-                norm_rates[i] * self.priority_weights['rate_constant'] +
                 norm_impurities[i] * self.priority_weights['impurity_formation'] +
+                norm_yields[i] * self.priority_weights['yield'] +
                 norm_conversions[i] * self.priority_weights['conversion'] +
-                norm_yields[i] * self.priority_weights['yield']
+                norm_selectivity[i] * self.priority_weights['selectivity'] +
+                norm_rates[i] * self.priority_weights['rate_constant'] +
+                norm_temp_sens[i] * self.priority_weights['temp_sensitivity'] +
+                norm_conc_sens[i] * self.priority_weights['conc_sensitivity']
             )
             scores.append((rxn, score, condition_results[rxn]))
             
