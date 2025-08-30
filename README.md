@@ -253,5 +253,8 @@ Temperature Sensitivity: 0.005 (most stable)
 
 # **Result Plots**
 
+<img width="3600" height="3000" alt="Comparison_T30_C50" src="https://github.com/user-attachments/assets/ef9a7e5b-2cbc-46de-9a9d-4fe8b54c669d" />
+
 <img width="5511" height="3424" alt="Performance_Score_Matrix" src="https://github.com/user-attachments/assets/dcac3e85-5606-4c23-ac44-3736767c6e91" />
+
 <img width="7134" height="4551" alt="Reaction_Performance_Comparison" src="https://github.com/user-attachments/assets/55a456f7-748a-4b45-9ccd-179cdc2d5145" />
