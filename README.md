@@ -1,5 +1,11 @@
 # 🎯 **COMPREHENSIVE FLOW CHEMISTRY ANALYSIS APPROACH**
 
+![alt text](Performance_Score_Matrix.png)
+
+![alt text](Reaction_Performance_Comparison.png)
+
+![alt text](comparison_plots/Comparison_T30_C50.png)
+
 ## **📋 PROJECT OVERVIEW**
 
 We conducted a **systematic, data-driven analysis** to determine the optimal reaction pathway among three alternatives (R1, R2, R3) for flow### **Strategic Impact:**
