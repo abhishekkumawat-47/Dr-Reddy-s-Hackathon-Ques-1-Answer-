@@ -7,25 +7,29 @@ print("📊 CREATING IMPROVED COMPREHENSIVE VISUALIZATION")
 print("="*60)
 
 # Load the saved results
-df_conditions = pd.read_excel('Comprehensive_Reaction_Analysis.xlsx', sheet_name='Condition_by_Condition')
-df_overall = pd.read_excel('Comprehensive_Reaction_Analysis.xlsx', sheet_name='Overall_Rankings')
+df_conditions = pd.read_excel('Q1 - Rxn_Analysis.xlsx', sheet_name='Condition_by_Condition')
+df_overall = pd.read_excel('Q1 - Rxn_Analysis.xlsx', sheet_name='Overall_Rankings')
 
 # Ensure consistent ordering: R1, R2, R3
 reaction_order = ['R1', 'R2', 'R3']
 df_overall = df_overall.set_index('reaction').reindex(reaction_order).reset_index()
 
-# Set global font sizes for better readability
+# Set global font sizes for enhanced readability
 plt.rcParams.update({
-    'font.size': 16,           # Increased base font size
-    'axes.titlesize': 18,      # Increased subplot titles
-    'axes.labelsize': 16,      # Increased axis labels
-    'xtick.labelsize': 14,     # Increased X-axis tick labels
-    'ytick.labelsize': 14,     # Increased Y-axis tick labels
-    'legend.fontsize': 14,     # Increased legend
-    'figure.titlesize': 22,    # Increased main title
-    'lines.linewidth': 3.0,    # Thicker lines
-    'grid.linewidth': 1.2,     # Thicker grid lines
-    'axes.linewidth': 1.5      # Thicker axes border
+    'font.size': 18,           # Further increased base font size
+    'axes.titlesize': 22,      # Larger subplot titles
+    'axes.labelsize': 20,      # Larger axis labels
+    'xtick.labelsize': 18,     # Larger X-axis tick labels
+    'ytick.labelsize': 18,     # Larger Y-axis tick labels
+    'legend.fontsize': 16,     # Larger legend
+    'figure.titlesize': 26,    # Larger main title
+    'lines.linewidth': 3.5,    # Even thicker lines
+    'grid.linewidth': 1.4,     # Thicker grid lines
+    'axes.linewidth': 1.8,     # Thicker axes border
+    'xtick.major.size': 10,    # Larger x-axis tick marks
+    'ytick.major.size': 10,    # Larger y-axis tick marks
+    'xtick.major.width': 2.0,  # Thicker x-axis tick marks
+    'ytick.major.width': 2.0   # Thicker y-axis tick marks
 })
 
 # ========================================
@@ -249,7 +253,7 @@ print(f"It consistently outperforms across ALL priority criteria and conditions.
 print(f"\n📊 Files Generated:")
 print(f"• Reaction_Performance_Comparison.png - Comparison plots")
 print(f"• Performance_Score_Matrix.png - Heatmap visualization")
-print(f"• Comprehensive_Reaction_Analysis.xlsx - Detailed data")
+print(f"• Q1 - Rxn_Analysis.xlsx - Detailed data")
 
 # Reset font settings
 plt.rcParams.update(plt.rcParamsDefault)
