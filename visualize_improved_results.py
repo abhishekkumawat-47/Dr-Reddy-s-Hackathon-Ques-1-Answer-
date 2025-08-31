@@ -14,23 +14,26 @@ df_overall = pd.read_excel('Comprehensive_Reaction_Analysis.xlsx', sheet_name='O
 reaction_order = ['R1', 'R2', 'R3']
 df_overall = df_overall.set_index('reaction').reindex(reaction_order).reset_index()
 
-# Set global font sizes
+# Set global font sizes for better readability
 plt.rcParams.update({
-    'font.size': 14,
-    'axes.titlesize': 16,
-    'axes.labelsize': 14,
-    'xtick.labelsize': 12,
-    'ytick.labelsize': 12,
-    'legend.fontsize': 12,
-    'figure.titlesize': 18
+    'font.size': 16,           # Increased base font size
+    'axes.titlesize': 18,      # Increased subplot titles
+    'axes.labelsize': 16,      # Increased axis labels
+    'xtick.labelsize': 14,     # Increased X-axis tick labels
+    'ytick.labelsize': 14,     # Increased Y-axis tick labels
+    'legend.fontsize': 14,     # Increased legend
+    'figure.titlesize': 22,    # Increased main title
+    'lines.linewidth': 3.0,    # Thicker lines
+    'grid.linewidth': 1.2,     # Thicker grid lines
+    'axes.linewidth': 1.5      # Thicker axes border
 })
 
 # ========================================
 # IMAGE 1: ALL 6 COMPARISON PLOTS
 # ========================================
 
-fig1 = plt.figure(figsize=(24, 16))
-fig1.suptitle('COMPREHENSIVE REACTION PERFORMANCE COMPARISON', fontsize=20, fontweight='bold', y=0.95)
+fig1 = plt.figure(figsize=(28, 20))  # Increased from (24, 16)
+fig1.suptitle('COMPREHENSIVE REACTION PERFORMANCE COMPARISON', fontsize=24, fontweight='bold', y=0.95)
 
 # Define consistent colors for R1, R2, R3
 colors = ['#2E8B57', '#CD853F', '#B22222']  # Green, Orange, Red
@@ -39,28 +42,30 @@ reactions = df_overall['reaction'].tolist()
 # 1. Overall Score Comparison
 ax1 = plt.subplot(2, 3, 1)
 scores = df_overall['overall_score'].tolist()
-bars = plt.bar(reactions, scores, color=colors, width=0.6)
-plt.title('Overall Performance Scores\n(Higher = Better)', fontweight='bold', fontsize=16)
-plt.ylabel('Score', fontsize=14)
+bars = plt.bar(reactions, scores, color=colors, width=0.6, edgecolor='black', linewidth=2)
+plt.title('Overall Performance Scores\n(Higher = Better)', fontweight='bold', fontsize=18, pad=20)
+plt.ylabel('Score', fontsize=16, fontweight='bold')
 plt.ylim(0, max(scores) * 1.2)
+plt.grid(True, alpha=0.3, axis='y')
 
-# Add score values on bars
+# Add score values on bars with larger font
 for bar, score in zip(bars, scores):
     plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.05, 
-             f'{score:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=12)
+             f'{score:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=14)
 
 # 2. Selectivity Comparison
 ax2 = plt.subplot(2, 3, 2)
 selectivities = df_overall['avg_selectivity'].tolist()
-bars = plt.bar(reactions, selectivities, color=colors, width=0.6)
-plt.title('Average Selectivity\n(Priority #1)', fontweight='bold', fontsize=16)
-plt.ylabel('Selectivity (%)', fontsize=14)
+bars = plt.bar(reactions, selectivities, color=colors, width=0.6, edgecolor='black', linewidth=2)
+plt.title('Average Selectivity\n(Priority #1)', fontweight='bold', fontsize=18, pad=20)
+plt.ylabel('Selectivity (%)', fontsize=16, fontweight='bold')
 plt.ylim(0, 100)
+plt.grid(True, alpha=0.3, axis='y')
 
-# Add values on bars
+# Add values on bars with larger font
 for bar, sel in zip(bars, selectivities):
     plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1, 
-             f'{sel:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=12)
+             f'{sel:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=14)
 
 # 3. Temperature & Concentration Sensitivity
 ax3 = plt.subplot(2, 3, 3)
