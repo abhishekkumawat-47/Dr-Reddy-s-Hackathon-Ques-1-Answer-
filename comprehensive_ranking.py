@@ -9,7 +9,7 @@ print("="*70)
 
 class ReactionRanker:
     def __init__(self):
-        # Priority weights based on your NEW requirements
+        # Priority weights based on your UPDATED requirements
         self.priority_weights = {
             'impurity_formation': 1.0,    # Priority 1 - Most important (minimization)
             'yield': 0.9,                # Priority 2 - Maximize yield = more product, less waste
@@ -378,11 +378,11 @@ def main():
     results_df = pd.DataFrame(ranker.results)
     overall_df = pd.DataFrame(overall_results)
     
-    with pd.ExcelWriter('Comprehensive_Reaction_Analysis.xlsx', engine='openpyxl') as writer:
+    with pd.ExcelWriter('Q1 - Rxn_Analysis.xlsx', engine='openpyxl') as writer:
         results_df.to_excel(writer, sheet_name='Condition_by_Condition', index=False)
         overall_df.to_excel(writer, sheet_name='Overall_Rankings', index=False)
     
-    print(f"\n💾 Results saved to: Comprehensive_Reaction_Analysis.xlsx")
+    print(f"\n💾 Results saved to: Q1 - Rxn_Analysis.xlsx")
     
     return overall_results
 

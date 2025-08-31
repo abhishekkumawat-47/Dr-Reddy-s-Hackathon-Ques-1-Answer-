@@ -36,19 +36,19 @@ plt.rcParams.update({
 # IMAGE 1: ALL 6 COMPARISON PLOTS
 # ========================================
 
-fig1 = plt.figure(figsize=(28, 20))  # Increased from (24, 16)
-fig1.suptitle('COMPREHENSIVE REACTION PERFORMANCE COMPARISON', fontsize=24, fontweight='bold', y=0.95)
+fig1 = plt.figure(figsize=(30, 16))  # Increased width for 3x2 layout
+fig1.suptitle('COMPREHENSIVE REACTION PERFORMANCE COMPARISON', fontsize=26, fontweight='bold', y=0.95)
 
 # Define consistent colors for R1, R2, R3
 colors = ['#2E8B57', '#CD853F', '#B22222']  # Green, Orange, Red
 reactions = df_overall['reaction'].tolist()
 
-# 1. Overall Score Comparison
+# 1. Overall Performance Scores (Summary)
 ax1 = plt.subplot(2, 3, 1)
 scores = df_overall['overall_score'].tolist()
 bars = plt.bar(reactions, scores, color=colors, width=0.6, edgecolor='black', linewidth=2)
-plt.title('Overall Performance Scores\n(Higher = Better)', fontweight='bold', fontsize=18, pad=20)
-plt.ylabel('Score', fontsize=16, fontweight='bold')
+plt.title('OVERALL PERFORMANCE SCORES\n(Weighted by All Priorities)', fontweight='bold', fontsize=18, pad=20)
+plt.ylabel('Overall Score', fontsize=16, fontweight='bold')
 plt.ylim(0, max(scores) * 1.2)
 plt.grid(True, alpha=0.3, axis='y')
 
@@ -57,22 +57,76 @@ for bar, score in zip(bars, scores):
     plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.05, 
              f'{score:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=14)
 
-# 2. Selectivity Comparison
+# 2. Priority #1: Impurity Formation (Most Important)
 ax2 = plt.subplot(2, 3, 2)
+impurities = df_overall['avg_impurities'].tolist()
+bars = plt.bar(reactions, impurities, color=colors, width=0.6, edgecolor='black', linewidth=2)
+plt.title('PRIORITY #1: Impurity Formation\n(Lower = Better)', fontweight='bold', fontsize=18, pad=20)
+plt.ylabel('Impurities (%)', fontsize=16, fontweight='bold')
+plt.grid(True, alpha=0.3, axis='y')
+
+# Add values on bars with larger font
+for bar, imp in zip(bars, impurities):
+    plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1, 
+             f'{imp:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=14)
+
+# 3. Priority #2 & #3: Yield and Conversion (Combined)
+ax3 = plt.subplot(2, 3, 3)
+yields = df_overall['avg_yield'].tolist()
+conversions = df_overall['avg_conversion'].tolist()
+
+x = np.arange(len(reactions))
+width = 0.35
+
+# Use consistent colors for R1, R2, R3 with different shades
+yield_colors = ['#2E8B57', '#CD853F', '#B22222']  # Main colors for yield
+conv_colors = ["#365C36", "#966031", "#75333D"]   # Lighter shades for conversion
+
+bars1 = plt.bar(x - width/2, yields, width, label='Yield (Priority #2)', color=yield_colors, edgecolor='black', linewidth=1)
+bars2 = plt.bar(x + width/2, conversions, width, label='Conversion (Priority #3)', color=conv_colors, edgecolor='black', linewidth=1)
+plt.title('PRIORITY #2 & #3: Yield & Conversion\n(Higher = Better)', fontweight='bold', fontsize=18, pad=20)
+plt.ylabel('Percentage (%)', fontsize=16, fontweight='bold')
+plt.xticks(x, reactions)
+plt.legend(fontsize=14, loc='lower right')
+plt.grid(True, alpha=0.3, axis='y')
+
+# Add values on bars
+for bar, yld in zip(bars1, yields):
+    plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5, 
+             f'{yld:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=12)
+for bar, conv in zip(bars2, conversions):
+    plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5, 
+             f'{conv:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=12)
+
+# 4. Priority #4: Selectivity
+ax4 = plt.subplot(2, 3, 4)
 selectivities = df_overall['avg_selectivity'].tolist()
 bars = plt.bar(reactions, selectivities, color=colors, width=0.6, edgecolor='black', linewidth=2)
-plt.title('Average Selectivity\n(Priority #1)', fontweight='bold', fontsize=18, pad=20)
+plt.title('PRIORITY #4: Average Selectivity\n(Higher = Better)', fontweight='bold', fontsize=18, pad=20)
 plt.ylabel('Selectivity (%)', fontsize=16, fontweight='bold')
 plt.ylim(0, 100)
 plt.grid(True, alpha=0.3, axis='y')
 
-# Add values on bars with larger font
+# Add values on bars
 for bar, sel in zip(bars, selectivities):
     plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1, 
              f'{sel:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=14)
 
-# 3. Temperature & Concentration Sensitivity
-ax3 = plt.subplot(2, 3, 3)
+# 5. Priority #5: Rate Constants
+ax5 = plt.subplot(2, 3, 5)
+rates = df_overall['avg_rate'].tolist()
+bars = plt.bar(reactions, rates, color=colors, width=0.6, edgecolor='black', linewidth=2)
+plt.title('PRIORITY #5: Average Rate Constants\n(Higher = Better)', fontweight='bold', fontsize=18, pad=20)
+plt.ylabel('Rate (%/h)', fontsize=16, fontweight='bold')
+plt.grid(True, alpha=0.3, axis='y')
+
+# Add values on bars
+for bar, rate in zip(bars, rates):
+    plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.2, 
+             f'{rate:.1f}', ha='center', va='bottom', fontweight='bold', fontsize=14)
+
+# 6. Priority #6: Sensitivity Analysis
+ax6 = plt.subplot(2, 3, 6)
 temp_sens = df_overall['avg_temp_sensitivity'].tolist()
 conc_sens = df_overall['avg_conc_sensitivity'].tolist()
 
@@ -85,69 +139,19 @@ conc_colors = ['#2E8B5780', '#CD853F80', '#B2222280']  # Same colors with transp
 
 bars1 = plt.bar(x - width/2, temp_sens, width, label='Temp Sensitivity', color=temp_colors)
 bars2 = plt.bar(x + width/2, conc_sens, width, label='Conc Sensitivity', color=conc_colors)
-plt.title('Sensitivity Analysis\n(Priority #2 - Lower = Better)', fontweight='bold', fontsize=16)
-plt.ylabel('Sensitivity', fontsize=14)
+plt.title('PRIORITY #6: Sensitivity Analysis\n(Lower = Better)', fontweight='bold', fontsize=18, pad=20)
+plt.ylabel('Sensitivity', fontsize=16, fontweight='bold')
 plt.xticks(x, reactions)
-plt.legend(fontsize=12)
+plt.legend(fontsize=14)
+plt.grid(True, alpha=0.3, axis='y')
 
 # Add values on bars
 for bar, val in zip(bars1, temp_sens):
     plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01, 
-             f'{val:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=10)
+             f'{val:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=12)
 for bar, val in zip(bars2, conc_sens):
     plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.01, 
-             f'{val:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=10)
-
-# 4. Rate Constants
-ax4 = plt.subplot(2, 3, 4)
-rates = df_overall['avg_rate'].tolist()
-bars = plt.bar(reactions, rates, color=colors, width=0.6)
-plt.title('Average Rate Constants\n(Priority #3)', fontweight='bold', fontsize=16)
-plt.ylabel('Rate (%/h)', fontsize=14)
-
-# Add values on bars
-for bar, rate in zip(bars, rates):
-    plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.2, 
-             f'{rate:.1f}', ha='center', va='bottom', fontweight='bold', fontsize=12)
-
-# 5. Impurity Formation
-ax5 = plt.subplot(2, 3, 5)
-impurities = df_overall['avg_impurities'].tolist()
-bars = plt.bar(reactions, impurities, color=colors, width=0.6)
-plt.title('Average Impurity Formation\n(Priority #4 - Lower = Better)', fontweight='bold', fontsize=16)
-plt.ylabel('Impurities (%)', fontsize=14)
-
-# Add values on bars
-for bar, imp in zip(bars, impurities):
-    plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5, 
-             f'{imp:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=12)
-
-# 6. Conversion & Yield
-ax6 = plt.subplot(2, 3, 6)
-conversions = df_overall['avg_conversion'].tolist()
-yields = df_overall['avg_yield'].tolist()
-
-x = np.arange(len(reactions))
-width = 0.35
-
-# Use consistent colors for R1, R2, R3 with different shades for conversion vs yield
-conv_colors = ['#2E8B57', '#CD853F', '#B22222']  # Same as main colors
-yield_colors = ['#2E8B5780', '#CD853F80', '#B2222280']  # Same colors with transparency
-
-bars1 = plt.bar(x - width/2, conversions, width, label='Conversion', color=conv_colors)
-bars2 = plt.bar(x + width/2, yields, width, label='Yield', color=yield_colors)
-plt.title('Conversion & Yield\n(Priority #5 & #6)', fontweight='bold', fontsize=16)
-plt.ylabel('Percentage (%)', fontsize=14)
-plt.xticks(x, reactions)
-plt.legend(fontsize=12)
-
-# Add values on bars
-for bar, val in zip(bars1, conversions):
-    plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1, 
-             f'{val:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=10)
-for bar, val in zip(bars2, yields):
-    plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1, 
-             f'{val:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=10)
+             f'{val:.3f}', ha='center', va='bottom', fontweight='bold', fontsize=12)
 
 plt.tight_layout(rect=[0, 0, 1, 0.93])
 plt.savefig('Reaction_Performance_Comparison.png', dpi=300, bbox_inches='tight')
@@ -239,12 +243,14 @@ print(summary_df.to_string(index=False))
 
 print(f"\n🎯 KEY FINDINGS:")
 print(f"• R1 DOMINATES: Wins ALL 15 conditions tested")
-print(f"• R1 has the BEST selectivity (96.6%) - your #1 priority")
-print(f"• R1 has LOWEST sensitivity to temp/conc changes - your #2 priority")  
-print(f"• R1 has FASTEST rate (20%/h) - your #3 priority")
-print(f"• R1 produces LEAST impurities (3.4%) - your #4 priority")
-print(f"• R2 has MAJOR selectivity issues (10.7% avg) - high impurity formation")
-print(f"• R3 is decent but SLOW and more sensitive to conditions")
+print(f"• R1 produces LEAST impurities (3.4%) - your #1 priority")
+print(f"• R1 has HIGHEST yield (96.4%) - your #2 priority")
+print(f"• R1 has BEST conversion (99.8%) - your #3 priority")
+print(f"• R1 has EXCELLENT selectivity (96.6%) - your #4 priority")
+print(f"• R1 has FASTEST rate (20%/h) - your #5 priority")
+print(f"• R1 has LOWEST sensitivity to temp/conc changes - your #6 priority")
+print(f"• R2 has MAJOR impurity issues (89.2% avg) - fails priority #1")
+print(f"• R3 is decent but SLOW and produces more impurities")
 
 print(f"\n💡 BUSINESS RECOMMENDATION:")
 print(f"IMPLEMENT R1 as your primary reaction pathway!")
