@@ -49,14 +49,16 @@ def plot_impurity_by_condition(reaction_name, input_file='Q1 - Rxn_Analysis.xlsx
     # Set plot style and font parameters for readability
     sns.set_style("whitegrid")
     plt.rcParams.update({
-        'font.size': 14,
+        'font.size': 32,
         'font.weight': 'bold',
         'axes.labelweight': 'bold',
-        'axes.titleweight': 'bold'
+        'axes.titleweight': 'bold',
+        'xtick.labelsize': 28,
+        'ytick.labelsize': 28
     })
 
     # Create a larger figure
-    plt.figure(figsize=(18, 10))
+    plt.figure(figsize=(20, 12))
 
     # Create the bar plot
     ax = sns.barplot(
@@ -67,21 +69,22 @@ def plot_impurity_by_condition(reaction_name, input_file='Q1 - Rxn_Analysis.xlsx
     )
 
     # --- Labels and Titles ---
-    plt.title(f'Impurity Formation Across All Conditions for {reaction_name}', fontsize=20, fontweight='bold')
-    plt.xlabel('Temperature / Concentration Pair', fontsize=16, fontweight='bold')
-    plt.ylabel('Impurity Formation (%)', fontsize=16, fontweight='bold')
+    plt.title(f'Impurity Formation Across All Conditions for {reaction_name}', fontsize=44, fontweight='bold', pad=20)
+    plt.xlabel('Temperature / Concentration Pair', fontsize=38, fontweight='bold', labelpad=15)
+    plt.ylabel('Impurity Formation (%)', fontsize=38, fontweight='bold', labelpad=15)
 
     # Rotate x-axis labels for better visibility
-    plt.xticks(rotation=45, ha='right')
+    plt.xticks(rotation=45, ha='right', fontsize=28, fontweight='bold')
+    plt.yticks(fontsize=28, fontweight='bold')
 
     # Add value labels on top of each bar
     for p in ax.patches:
         ax.annotate(f'{p.get_height():.2f}%',
                     (p.get_x() + p.get_width() / 2., p.get_height()),
                     ha='center', va='center',
-                    xytext=(0, 9),
+                    xytext=(0, 12),
                     textcoords='offset points',
-                    fontsize=12,
+                    fontsize=24,
                     fontweight='bold')
 
     # Adjust layout and save the plot
