@@ -271,4 +271,3 @@ Limitation: Extremely slow reaction rate
 ---
 
 **🎯 CONCLUSION: R1 represents the optimal choice for flow chemistry implementation, delivering superior performance in impurity minimization (3.4%), yield maximization (96.4%), and overall process efficiency while ensuring robust, scalable operation across the entire operating window.**
-**🎯 CONCLUSION: R1 represents the optimal choice for flow chemistry implementation, delivering superior performance in impurity minimization (3.4%), yield maximization (96.4%), and overall process efficiency while ensuring robust, scalable operation across the entire operating window.**
